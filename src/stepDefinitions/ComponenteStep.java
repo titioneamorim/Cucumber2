@@ -9,150 +9,102 @@ public class ComponenteStep {
 
     Componentes componentes = new Componentes();
 
-    @Dado("que o usuário acessou o arquivo Campo de treinamento")
+        @Dado("que o usuário acessou o arquivo Campo de treinamento")
     public void que_o_usuário_acessou_o_arquivo_Campo_de_treinamento() {
         componentes.inicializa();
 
     }
 
-    @Quando("o usuário digitar Batatinha")
-    public void o_usuário_digitar_Batatinha() {
-        componentes.testeTextField();
+
+    @Dado("que apenas o campo nome estiver vazio")
+    public void que_apenas_o_campo_nome_estiver_vazio() {
+        componentes.preencheCampo("elementosForm:sobrenome","Sobrenome qualquer");
+        componentes.selecionaRadioButton("elementosForm:sexo:0");
     }
 
-    @Então("o resultado no campo textfield deve ser Batatinha")
-    public void o_resultado_no_campo_textfield_deve_ser_Batatinha() {
-        componentes.validaTextField();
+    @Quando("o usuario clicou no botão Cadastrar")
+    public void o_usuario_clicou_no_botão_Cadastrar() {
+        componentes.interageBotao("elementosForm:cadastrar");
+    }
+
+    @Então("deve aparecer a mensagem de feedback Nome eh obrigatorio")
+    public void deve_aparecer_a_mensagem_de_feedback_Nome_eh_obrigatorio() {
+        componentes.validaAlertConfirm("Nome eh obrigatorio");
         componentes.fecharNavegador();
     }
 
-    @Quando("o usuário digitar Batatinha Batatinha")
-    public void o_usuário_digitar_Batatinha_Batatinha() {
-        componentes.testeTextArea();
+    @Dado("que apenas o campo sobrenome estiver vazio")
+    public void que_apenas_o_campo_sobrenome_estiver_vazio() {
+        componentes.preencheCampo("elementosForm:nome","Nome qualquer");
+        componentes.selecionaRadioButton("elementosForm:sexo:0");
     }
 
-    @Então("o resultado no campo textarea deve ser Batatinha Batatinha")
-    public void o_resultado_no_campo_textarea_deve_ser_Batatinha_Batatinha() {
-        componentes.validaTextArea();
+    @Então("deve aparecer a mensagem de feedback Sobrenome eh obrigatorio")
+    public void deve_aparecer_a_mensagem_de_feedback_Sobrenome_eh_obrigatorio() {
+        componentes.validaAlertConfirm("Sobrenome eh obrigatorio");
         componentes.fecharNavegador();
     }
 
-    @Quando("o usuário selecionar radio")
-    public void o_usuário_selecionar_radio() {
-        componentes.testeSelecaoRadioButton("elementosForm:sexo:0");
+    @Dado("que apenas o campo sexo estiver vazio")
+    public void que_apenas_o_campo_sexo_estiver_vazio() {
+        componentes.preencheCampo("elementosForm:nome","Nome qualquer");
+        componentes.preencheCampo("elementosForm:sobrenome","Sobrenome qualquer");
     }
 
-    @Então("o valor do radiobutton deve ser true")
-    public void o_valor_do_radiobutton_deve_ser_true() {
-        componentes.validaSelecaoCheckBox("elementosForm:sexo:0");
+    @Então("deve aparecer a mensagem de feedback Sexo eh obrigatorio")
+    public void deve_aparecer_a_mensagem_de_feedback_Sexo_eh_obrigatorio() {
+        componentes.validaAlertConfirm("Sexo eh obrigatorio");
         componentes.fecharNavegador();
     }
 
-    @Quando("o usuário selecionar o checkbos")
-    public void o_usuário_selecionar_o_checkbos() {
-       componentes.testeSelecaoCheckBox("elementosForm:comidaFavorita:0");
+    @Dado("que o usuário preencheu os dados obrigatórios")
+    public void que_o_usuário_preencheu_os_dados_obrigatórios() {
+        componentes.preencheCampo("elementosForm:nome","Nome qualquer");
+        componentes.preencheCampo("elementosForm:sobrenome","Sobrenome qualquer");
+        componentes.selecionaRadioButton("elementosForm:sexo:0");
     }
 
-    @Então("o valor do checkbox deve ser true")
-    public void o_valor_do_checkbox_deve_ser_true() {
-        componentes.validaSelecaoCheckBox("elementosForm:comidaFavorita:0");
+    @Dado("clicou no botão cadastrar")
+    public void clicou_no_botão_cadastrar() {
+        componentes.interageBotao("elementosForm:cadastrar");
+    }
+
+    @Então("os dados preenchidos devem ser mostrados em div junto com a confirmação de cadastro.")
+    public void os_dados_preenchidos_devem_ser_mostrados_em_div_junto_com_a_confirmação_de_cadastro() {
+        componentes.validaCampoResultado();
+        componentes.validaDadosCampo("descNome", "Nome: Nome qualquer");
+        componentes.validaDadosCampo("descSobrenome", "Sobrenome: Sobrenome qualquer");
+        componentes.validaDadosCampo("descSexo", "Sexo: Masculino");
+        componentes.validaDadosCampo("descComida","Comida:" );
+        componentes.validaDadosCampo("descEscolaridade","Escolaridade: 1grauincomp" );
+        componentes.validaDadosCampo("descEsportes","Esportes:" );
+        componentes.validaDadosCampo("descSugestoes","Sugestoes:" );
         componentes.fecharNavegador();
     }
 
-    @Quando("o usuário selecionar o valor no combo")
-    public void o_usuário_selecionar_o_valor_no_combo() {
-        componentes.selecionarValorCOmbobox();
+    @Dado("que o usuário preencheu todos os dados")
+    public void que_o_usuário_preencheu_todos_os_dados() {
+        componentes.preencheCampo("elementosForm:nome","Nome qualquer");
+        componentes.preencheCampo("elementosForm:sobrenome","Sobrenome qualquer");
+        componentes.selecionaRadioButton("elementosForm:sexo:0");
+        componentes.selecionaComida();
+        componentes.selecionarEscolaridade();
+        componentes.selecionarValorEsporteMultiplo();
+        componentes.preencheSugestoes();
     }
 
-    @Então("o valor selecionado deve ser apresentado")
-    public void o_valor_selecionado_deve_ser_apresentado() {
-        componentes.selecionarValorCOmbobox();
+    @Então("todos os dados preenchidos devem ser mostrados em div junto com a confirmação de cadastro.")
+    public void todos_os_dados_preenchidos_devem_ser_mostrados_em_div_junto_com_a_confirmação_de_cadastro() {
+        componentes.validaCampoResultado();
+        componentes.validaDadosCampo("descNome", "Nome: Nome qualquer");
+        componentes.validaDadosCampo("descSobrenome", "Sobrenome: Sobrenome qualquer");
+        componentes.validaDadosCampo("descSexo", "Sexo: Masculino");
+        componentes.validaDadosCampo("descComida","Comida: Carne" );
+        componentes.validaDadosCampo("descEscolaridade","Escolaridade: especializacao" );
+        componentes.validaDadosCampo("descEsportes","Esportes: O que eh esporte?" );
+        componentes.validaDadosCampo("descSugestoes","Sugestoes: Aqui funcionou! Na nova linha também!" );
         componentes.fecharNavegador();
     }
 
-    @Quando("o usuario clicar no elemento combobox")
-    public void o_usuario_clicar_no_elemento_combobox() {
-        componentes.listarQuantidadeCombobox();
-    }
 
-    @Então("o elemento deve conter oito opções")
-    public void o_elemento_deve_conter_oito_opções() {
-        componentes.validaQuantidadeCombo();
-        componentes.fecharNavegador();
-    }
-
-    @Quando("o usuário selecionar a opção mestrado")
-    public void o_usuário_selecionar_a_opção_mestrado() {
-        componentes.selecionarValorPeloTexto("mestrado");
-    }
-
-    @Então("a opção mestrado deve ser selecionada")
-    public void a_opção_Mestrado_deve_ser_selecionada() {
-        componentes.validaOpcaoSelecionada("Mestrado");
-        componentes.fecharNavegador();
-    }
-
-    @Quando("o usuário selecionar um valor no elemento campo de múltipla escolha")
-    public void o_usuário_selecionar_um_valor_no_elemento_campo_de_múltipla_escolha() {
-        componentes.selecionarValorComboMultiplo();
-    }
-
-    @Então("o valor deve aparecer selecionado no elemento combobox de múltipla escolha")
-    public void o_valor_deve_aparecer_selecionado_no_elemento_combobox_de_múltipla_escolha() {
-        componentes.vaidaValorComboMultiplo();
-        componentes.fecharNavegador();
-    }
-
-    @Quando("o usuário clicar no botão Clique Me")
-    public void o_usuário_clicar_no_botão_Clique_Me() {
-        componentes.interageBotao();
-    }
-
-    @Então("o nome do botão deve ser alterado para Obrigado")
-    public void o_nome_do_botão_deve_ser_alterado_para_Obrigado() {
-        componentes.validaInteracaoBtao();
-    }
-
-    @Quando("o usuario clicar no botão Alert")
-    public void o_usuario_clicar_no_botão_Alert() {
-        componentes.interageBotaoAlert();
-    }
-
-    @Então("deve aparecer a mensagem de feedback ALert Simples")
-    public void deve_aparecer_a_mensagem_de_feedback_ALert_Simples() {
-        componentes.validaInteracaoAlert();
-        componentes.fecharNavegador();
-    }
-
-    @Dado("que o usuario clicou no botão Confirm")
-    public void que_o_usuario_clicou_no_botão_Confirm() {
-        componentes.interageBotaoConfirm();
-    }
-
-    @Dado("aparecer a mensagem de confirmação Confirm Simples")
-    public void aparecer_a_mensagem_de_confirmação_Confirm_Simples() {
-        componentes.validaInteracaoAlertConfirm("Confirm Simples");
-    }
-
-    @Quando("ao usuário clicar em Ok")
-    public void ao_usuário_clicar_em_Ok() {
-        componentes.interageAlertConfirmOk();
-    }
-
-    @Então("deve aparecer a mensagem de feedback Confirmado")
-    public void deve_aparecer_a_mensagem_de_feedback_Confirmado() {
-        componentes.validaInteracaoAlertConfirm("Confirmado");
-
-    }
-
-    @Quando("ao usuário clicar em Cancelar")
-    public void ao_usuário_clicar_em_Cancelar() {
-        componentes.interageAlertConfirmCancelar();
-    }
-
-    @Então("deve aparecer a mensagem de feedback Negado")
-    public void deve_aparecer_a_mensagem_de_feedback_Negado() {
-        componentes.validaInteracaoAlertConfirm("Negado");
-
-    }
 }
